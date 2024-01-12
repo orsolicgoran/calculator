@@ -1,39 +1,39 @@
 <script lang="ts">
-  import NumbersButton from "./lib/NumbersButton.svelte";
-  import OperationsButton from "./lib/OperationsButton.svelte";
-  const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
-  const operations = ["+", "-", "*", "/", "%"];
-  function handleNumbersButtonClick(event: CustomEvent<{ number: number }>) {
-    const number = event.detail.number;
-  }
-  function handleOperationsButtonClick(
-    event: CustomEvent<{ operation: string }>
-  ) {
-    const operation = event.detail.operation;
+  import Display from "./lib/Display.svelte";
+  import Button from "./lib/Button.svelte";
+  const values = [
+    "+",
+    "1",
+    "2",
+    "3",
+    "-",
+    "4",
+    "5",
+    "6",
+    "*",
+    "7",
+    "8",
+    "9",
+    "/",
+    "C",
+    "0",
+    "=",
+  ];
+  function handleButtonClick(event: CustomEvent<{ value: string }>) {
+    const value = event.detail.value;
   }
 </script>
 
 <main class="container">
-  <div class="row">
-    <div class="grid numbers">
-      {#each numbers as number}
-        <div class="cell">
-          <NumbersButton {number} on:click={handleNumbersButtonClick} />
-        </div>
-      {/each}
-    </div>
+  <div class="display">
+    <Display />
   </div>
-  <div class="row">
-    <div class="grid operations">
-      {#each operations as operation}
-        <div class="cell">
-          <OperationsButton
-            {operation}
-            on:click={handleOperationsButtonClick}
-          />
-        </div>
-      {/each}
-    </div>
+  <div class="grid buttons">
+    {#each values as value}
+      <div class="cell">
+        <Button {value} on:click={handleButtonClick} />
+      </div>
+    {/each}
   </div>
 </main>
 
@@ -41,27 +41,19 @@
   .container {
     display: flex;
     justify-content: center;
-    align-items: start;
-    flex-direction: row;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
   }
   .grid {
     display: grid;
-    gap: 10px;
-    margin-top: 10rem;
+    gap: 1rem;
+    justify-items: center;
+    margin-top: 1rem;
   }
-  .numbers {
-    grid-template-columns: repeat(3, minmax(0, max-content));
-  }
-  .operations {
-    margin-left: 10px;
-    grid-template-columns: repeat(2, minmax(0, max-content));
-    grid-template-rows: repeat(3, minmax(0, max-content));
-  }
-  .cell {
-    display: flex;
-    justify-content: center;
-  }
-  .cell:nth-child(10) {
-    grid-column: span 3;
+  .buttons {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
   }
 </style>
